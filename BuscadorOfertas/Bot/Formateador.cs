@@ -13,6 +13,26 @@ public static class Formateador
     // Telegram corta los mensajes en 4096 caracteres; dejamos margen.
     public const int LargoMaximoMensaje = 3800;
 
+    public static string Icono(TipoOferta tipo) => tipo switch
+    {
+        TipoOferta.DesarrolloConTema => "💻🌿",
+        TipoOferta.DesarrolloJunior => "💻🌱",
+        TipoOferta.Desarrollo => "💻",
+        TipoOferta.Tema => "🌿",
+        TipoOferta.Flexible => "🧩",
+        _ => "•"
+    };
+
+    public static string Descripcion(TipoOferta tipo) => tipo switch
+    {
+        TipoOferta.DesarrolloConTema => "Desarrollo en tu tema",
+        TipoOferta.DesarrolloJunior => "Desarrollo junior",
+        TipoOferta.Desarrollo => "Desarrollo",
+        TipoOferta.Tema => "Tu tema",
+        TipoOferta.Flexible => "Trabajo flexible",
+        _ => ""
+    };
+
     public static string FormatearOferta(OfertaEvaluada e)
     {
         var o = e.Oferta;
@@ -20,15 +40,18 @@ public static class Formateador
 
         // Escapamos el texto porque mandamos el mensaje en modo HTML:
         // un "<" en un título rompería el formato.
-        sb.Append(e.EsDesarrollo ? "💻 " : "🌿 ");
-        sb.Append($"<b>{Esc(o.Titulo)}</b>\n");
+        sb.Append($"{Icono(e.Tipo)} <b>{Esc(o.Titulo)}</b>\n");
 
         if (!string.IsNullOrWhiteSpace(o.Organizacion))
             sb.Append($"🏢 {Esc(o.Organizacion)}\n");
         if (!string.IsNullOrWhiteSpace(o.Ubicacion))
             sb.Append($"📍 {Esc(o.Ubicacion)}\n");
 
-        sb.Append($"🔎 Coincide con: {Esc(string.Join(", ", e.TemasEncontrados.Take(4)))}\n");
+        var motivo = Descripcion(e.Tipo);
+        if (e.TemasEncontrados.Count > 0)
+            motivo += $" ({string.Join(", ", e.TemasEncontrados.Take(4))})";
+        sb.Append($"🔎 {Esc(motivo)}\n");
+
         sb.Append($"<a href=\"{Esc(o.Url)}\">Ver oferta en {Esc(o.Fuente)}</a>");
         return sb.ToString();
     }

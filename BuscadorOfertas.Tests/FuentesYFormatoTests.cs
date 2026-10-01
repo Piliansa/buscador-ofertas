@@ -34,6 +34,7 @@ public class FuentesYFormatoTests
         Assert.Equal("remotive-123", oferta.Id);
         Assert.Equal("Green Org", oferta.Organizacion);
         Assert.Equal("Remoto (LATAM)", oferta.Ubicacion);
+        Assert.Equal("LATAM", oferta.RegionPostulacion);
         Assert.Contains("climate", oferta.TextoCompleto);
     }
 
@@ -62,17 +63,19 @@ public class FuentesYFormatoTests
         Assert.Equal("reliefweb-456", oferta.Id);
         Assert.Equal("UNEP", oferta.Organizacion);
         Assert.Equal("Kenya", oferta.Ubicacion);
+        Assert.Null(oferta.RegionPostulacion); // el país es el lugar de trabajo, no una restricción
     }
 
     [Fact]
     public void El_formato_escapa_caracteres_html()
     {
         var oferta = new Oferta("1", "Dev <senior> & climate", "Org", "", "https://x.com", "Test", null, "");
-        var evaluada = new OfertaEvaluada(oferta, true, ["climate"]);
+        var evaluada = new OfertaEvaluada(oferta, TipoOferta.DesarrolloConTema, ["climate"]);
 
         var texto = Formateador.FormatearOferta(evaluada);
 
         Assert.Contains("Dev &lt;senior&gt; &amp; climate", texto);
+        Assert.StartsWith("💻🌿", texto);
     }
 
     [Fact]
@@ -82,7 +85,7 @@ public class FuentesYFormatoTests
         var ofertas = Enumerable.Range(1, 20)
             .Select(i => new OfertaEvaluada(
                 new Oferta($"{i}", titulo, "Org", "", "https://x.com", "Test", null, ""),
-                false, ["climate"]));
+                TipoOferta.Tema, ["climate"]));
 
         var mensajes = Formateador.ArmarMensajes(ofertas);
 

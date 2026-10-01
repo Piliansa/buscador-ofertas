@@ -7,7 +7,8 @@ namespace BuscadorOfertas.Fuentes;
 
 /// <summary>
 /// Empleos de ONGs y organismos humanitarios desde la API de ReliefWeb (ONU / OCHA).
-/// Requiere un "appname" preaprobado: se pide gratis en https://reliefweb.int/contact
+/// Requiere un "appname" preaprobado: se pide gratis con el formulario
+/// enlazado en https://apidoc.reliefweb.int/parameters (no hace falta crear cuenta).
 /// </summary>
 public class ReliefWebFuente : IFuenteOfertas
 {
@@ -65,6 +66,8 @@ public class ReliefWebFuente : IFuenteOfertas
             Url: f?.Url ?? "",
             Fuente: "ReliefWeb",
             Publicada: f?.Date?.Created,
+            // El país de ReliefWeb es donde se trabaja, no desde dónde se puede
+            // postular, así que no lo usamos como RegionPostulacion.
             TextoCompleto: $"{f?.Title} {f?.Body}");
     }
 

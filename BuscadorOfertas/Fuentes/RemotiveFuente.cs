@@ -46,7 +46,8 @@ public class RemotiveFuente : IFuenteOfertas
         Fuente: "Remotive",
         Publicada: DateTime.TryParse(t.PublicationDate, out var fecha) ? fecha : null,
         TextoCompleto: string.Join(" ",
-            t.Title, t.Category, string.Join(" ", t.Tags ?? []), t.Description)
+            t.Title, t.Category, string.Join(" ", t.Tags ?? []), t.Description),
+        RegionPostulacion: string.IsNullOrWhiteSpace(t.Location) ? null : t.Location
     );
 
     // Clases que reflejan el JSON de Remotive. [JsonPropertyName] conecta

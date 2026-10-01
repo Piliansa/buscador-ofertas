@@ -58,10 +58,14 @@ async Task OnMessage(Message msg, UpdateType tipo)
         case "/start":
         case "/ayuda":
             await bot.SendMessage(msg.Chat,
-                "Busco ofertas sobre ambiente, naturaleza, impacto ambiental y documentación histórica, " +
-                "y pongo primero las de desarrollo 💻.\n\n" +
+                "Busco ofertas a las que te podés postular desde Argentina, de nivel junior, y las ordeno así:\n\n" +
+                "💻🌿 Desarrollo en ambiente o historia\n" +
+                "💻🌱 Desarrollo junior\n" +
+                "💻 Desarrollo\n" +
+                "🌿 Ambiente o historia (sin desarrollo)\n" +
+                "🧩 Trabajos flexibles (revisión de contenido, evaluación de IA…)\n\n" +
                 "/buscar → todas las ofertas que coinciden\n" +
-                "/buscar palabras → además tienen que contener esas palabras (ej: /buscar remote)\n" +
+                "/buscar palabras → además tienen que contener esas palabras (ej: /buscar react)\n" +
                 "/fuentes → de dónde saco las ofertas");
             break;
 
@@ -105,7 +109,7 @@ async Task Buscar(Chat chat, string? palabrasExtra)
     if (relevantes.Count == 0)
     {
         await bot.SendMessage(chat,
-            $"Revisé {todas.Count} ofertas y ninguna coincide con tus temas por ahora. 🌱");
+            $"Revisé {todas.Count} ofertas y ninguna te sirve por ahora. 🌱");
         return;
     }
 

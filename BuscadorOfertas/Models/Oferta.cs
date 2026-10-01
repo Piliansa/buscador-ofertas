@@ -13,5 +13,8 @@ public record Oferta(
     string Url,
     string Fuente,
     DateTime? Publicada,
-    string TextoCompleto // título + descripción + etiquetas, para buscar palabras clave
+    string TextoCompleto, // título + descripción + etiquetas, para buscar palabras clave
+    // Desde dónde se aceptan postulantes (ej: "Worldwide", "USA", "UTC-5 to UTC+1").
+    // null = la fuente no lo informa, y en ese caso no filtramos por ubicación.
+    string? RegionPostulacion = null
 );
