@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Telegram.Bot" Version="22.8.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Permite que el proyecto de tests use las clases "internal" -->
+    <InternalsVisibleTo Include="BuscadorOfertas.Tests" />
+  </ItemGroup>
+
+</Project>
