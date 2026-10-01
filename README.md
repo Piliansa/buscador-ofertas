@@ -20,38 +20,43 @@ BuscadorOfertas.Tests/            ← tests con xUnit
 
 1. Instalá el [.NET SDK 8](https://dotnet.microsoft.com/download) o más nuevo.
 2. Pedile un token a **@BotFather** en Telegram (`/newbot`).
-3. Desde la carpeta raíz:
+3. Desde la carpeta raíz, cargá el token sin escribirlo en el comando (así no queda guardado en el historial de la terminal) y corré el bot:
+
+```powershell
+# Windows (PowerShell)
+$env:TELEGRAM_TOKEN = Read-Host "Pegá el token"
+dotnet run --project BuscadorOfertas
+```
 
 ```bash
 # macOS / Linux
-export TELEGRAM_TOKEN="tu-token"
-dotnet run --project BuscadorOfertas
-
-# Windows (PowerShell)
-$env:TELEGRAM_TOKEN="tu-token"
+read -s -p "Pegá el token: " TELEGRAM_TOKEN && export TELEGRAM_TOKEN
 dotnet run --project BuscadorOfertas
 ```
+
+La variable dura solo mientras la terminal está abierta: no se guarda en ningún archivo ni se sube al repo. **Nunca pongas el token en el código ni lo compartas.** Si se llega a filtrar, generá uno nuevo con `/revoke` en @BotFather.
 
 4. En Telegram, escribile a tu bot `/start` y después `/buscar`.
 
 ### Activar ReliefWeb (empleos de ONGs)
 
-Pedí un appname gratis en https://reliefweb.int/contact (describilo como herramienta personal que consulta la API de empleos). Cuando te lo aprueben:
+Pedí un appname gratis completando [este formulario](https://docs.google.com/forms/d/e/1FAIpQLScR5EE_SBhweLLg_2xMCnXNbT6md4zxqIB00OL0yZWyrqX_Nw/viewform) (no hace falta crear cuenta). El nombre tiene que combinar tu nombre, el propósito y caracteres al azar, por ejemplo `tunombre-buscadorofertas-k7f3x`. Cuando te lo aprueben:
 
 ```bash
-export RELIEFWEB_APPNAME="tu-appname"
+export RELIEFWEB_APPNAME="tu-appname"            # macOS / Linux
+$env:RELIEFWEB_APPNAME = "tu-appname"          # Windows (PowerShell)
 ```
 
 Si la variable no está, el bot funciona solo con Remotive.
 
 ## Comandos
 
-| Comando | Qué hace |
-|---|---|
-| `/buscar` | Todas las ofertas que coinciden con tus temas |
-| `/buscar remote latam` | Además tienen que contener esas palabras |
-| `/fuentes` | Muestra qué fuentes están activas |
-| `/ayuda` | Ayuda |
+| Comando                | Qué hace                                      |
+| ---------------------- | --------------------------------------------- |
+| `/buscar`              | Todas las ofertas que coinciden con tus temas |
+| `/buscar remote latam` | Además tienen que contener esas palabras      |
+| `/fuentes`             | Muestra qué fuentes están activas             |
+| `/ayuda`               | Ayuda                                         |
 
 ## Tests
 
